@@ -9,6 +9,7 @@ from PySide6.QtWidgets import QApplication
 
 from config import ConfigManager
 from core import AppPaths, configure_logging
+from model_manager import StartupModelProvisioner
 from ui.logging_handler import QtLogHandler
 from ui.main_window import StoryForgeMainWindow
 
@@ -23,6 +24,8 @@ class StoryForgeApp:
         self._config_manager = ConfigManager(self._paths)
         self._config = self._config_manager.load()
         self._logger = configure_logging(self._paths, self._config.logging)
+        self._model_provisioner = StartupModelProvisioner(self._paths, self._logger)
+        self._model_provisioner.ensure_base_model()
 
         self._window = StoryForgeMainWindow(app_paths=self._paths, logger=self._logger)
         self._attach_ui_log_handler(self._logger, self._window)
