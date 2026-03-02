@@ -13,6 +13,7 @@ class ModelInfo:
     name: str
     version: str
     file_name: str
+    source_url: str | None = None
     installed: bool = False
 
     def to_dict(self) -> dict[str, Any]:
@@ -25,6 +26,7 @@ class ModelInfo:
             name=payload["name"],
             version=payload["version"],
             file_name=payload["file_name"],
+            source_url=payload.get("source_url"),
             installed=payload.get("installed", False),
         )
 
